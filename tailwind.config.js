@@ -28,6 +28,7 @@ module.exports = {
       128: "32rem",
       144: "36rem",
       "1/4": "25%",
+      "95Per": "95%",
     },
     extend: {
       margin: {
