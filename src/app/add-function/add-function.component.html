@@ -1,0 +1,15 @@
+<mat-card class="card-container">
+    <form [formGroup]="Formdata">
+        <br>
+        <div class="form-group">
+            <textarea placeholder="Enter Paragraph" class="form-control" #data formControlName="data" rows="3"  required></textarea>
+            <mat-error *ngIf="Formdata.controls['data'].errors?.required && Formdata.controls['data'].touched">
+                data is required
+            </mat-error>
+        </div>
+        <br>
+        <div>
+            <button mat-raised-button class="button" (click)="add(data.value)">Add ✔</button>
+        </div>
+    </form>
+</mat-card>
