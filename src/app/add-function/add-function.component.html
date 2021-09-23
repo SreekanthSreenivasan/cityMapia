@@ -1,7 +1,27 @@
 <mat-card class="bg-indigo-light">
-  <form [formGroup]="Formdata">
+  <form [formGroup]="Formdata" (ngSubmit)="onSubmit()">
     <br />
     <div class="p-8 ...">
+      <mat-form-field appearance="legacy">
+        <mat-label>First Name</mat-label>
+        <input
+          matInput
+          #firstName
+          formControlName="firstName"
+          placeholder="Enter Your First name"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="legacy">
+        <mat-label>Last Name</mat-label>
+        <input
+          matInput
+          #lastName
+          formControlName="lastName"
+          placeholder="Enter Your last name"
+        />
+      </mat-form-field>
+
       <textarea
         placeholder="Enter Paragraph"
         class="form-control"
@@ -11,6 +31,15 @@
         cols="50"
         required
       ></textarea>
+
+      <mat-form-field appearance="legacy">
+        <mat-label>Select Country</mat-label>
+        <mat-select formControlName="country">
+          <mat-option value="India">India</mat-option>
+          <mat-option value="America">America</mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <mat-error
         *ngIf="
           Formdata.controls['data'].errors?.required &&
@@ -25,10 +54,11 @@
       <button
         mat-raised-button
         class="bg-gradient-to-r from-red-500 ..."
-        (click)="add(data.value)"
+        type="submit"
       >
         Add ✔
       </button>
+      <!--(click)="add(data.value)"-->
     </div>
   </form>
 </mat-card>

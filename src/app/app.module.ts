@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MatSelectModule } from '@angular/material/select';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +32,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-
+    MatSelectModule,
     MatCardModule,
     MatButtonModule,
     MatGridListModule,
