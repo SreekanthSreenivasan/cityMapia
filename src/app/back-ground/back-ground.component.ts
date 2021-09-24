@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Hero } from '../hero';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
+import { IAddress } from '../hero';
 import { HeroService } from '../hero.service';
 import { Dataservice } from '../Services/dataservices';
 // import { Data } from '../data';
@@ -12,10 +15,12 @@ export class BackGroundComponent implements OnInit {
   titledata: any = [];
   titledata1: any = [];
   p: number = 1;
-  heroes: Hero[] = [];
+  heroes: IAddress[] = [];
   constructor(
     private Dataservice: Dataservice,
-    private heroService: HeroService
+    private heroService: HeroService,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
   ) {
     this.Dataservice.SearchInput.subscribe((response) => {
       debugger;
@@ -36,9 +41,21 @@ export class BackGroundComponent implements OnInit {
   getAllData() {
     this.heroService.getHeroes().subscribe((heroes) => (this.heroes = heroes));
   }
-  delete(hero: Hero): void {
+  delete(hero: IAddress): void {
     debugger;
-    this.heroes = this.heroes.filter((h) => h !== hero);
-    this.heroService.deleteHero(hero.id).subscribe();
+
+    let dialogRef = this.dialog.open(DialogBoxComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == 'true') {
+        this.heroes = this.heroes.filter((h) => h !== hero);
+        this.heroService.deleteHero(hero.id).subscribe();
+        this._snackBar.open('Deleted Successfully', '', {
+          duration: 1000,
+        });
+      } else {
+        return;
+      }
+    });
   }
 }

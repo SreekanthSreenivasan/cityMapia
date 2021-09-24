@@ -20,13 +20,21 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
+import {
+  MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+} from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 @NgModule({
   declarations: [
     AppComponent,
     AddFunctionComponent,
     BackGroundComponent,
     AppSearchFunctionComponent,
+    DialogBoxComponent,
   ],
+  entryComponents: [DialogBoxComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,11 +48,16 @@ import { MatSelectModule } from '@angular/material/select';
     MatInputModule,
     HttpClientModule,
     MatPaginatorModule,
+    MatSnackBarModule,
+    MatDialogModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false,
     }),
   ],
-  providers: [Dataservice],
+  providers: [
+    Dataservice,
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

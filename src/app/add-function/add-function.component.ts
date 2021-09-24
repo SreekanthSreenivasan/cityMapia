@@ -5,6 +5,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HeroService } from '../hero.service';
 import { Dataservice } from '../Services/dataservices';
 import { Hero } from '../Services/hero';
@@ -18,75 +19,70 @@ export class AddFunctionComponent {
   @Output() addNewData = new EventEmitter();
   name = 'Angular';
   data: any;
-  titledata: any = [];
-  Formdata: FormGroup;
-  heroes: Hero[] = [];
+
+  formModel!: FormGroup;
+  address: Hero[] = [];
   constructor(
     private fb: FormBuilder,
     private Dataservice: Dataservice,
-    private heroService: HeroService
-  ) {
-    this.Formdata = this.fb.group({
-      title: ['', [Validators.required]],
-      firstName: ['', [Validators.required]],
+    private heroService: HeroService,
+    private _snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit() {
+    this.formModel = this.fb.group({
+      name: [
+        '',
+        [Validators.required, Validators.minLength(3)],
+        Validators.maxLength(50),
+      ],
       lastName: ['', [Validators.required]],
       data: ['', [Validators.required]],
       country: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
     });
-    this.titledata = [];
-  }
-  ngOnInit() {
-    debugger;
 
-    this.titledata = [];
+    this.formModel.get('email')?.valueChanges.subscribe((checkValue) => {
+      console.log('value', checkValue);
+
+      if (this.formModel.get('email')?.valid) {
+        this.formModel.get('name')?.clearValidators();
+        this.formModel.get('name')?.updateValueAndValidity();
+      } else {
+        debugger;
+        this.formModel
+          .get('name')
+          ?.setValidators([
+            Validators.required,
+            Validators.minLength(3),
+            Validators.maxLength(50),
+          ]);
+        this.formModel.get('name')?.updateValueAndValidity();
+      }
+    });
   }
 
   getAllData(): void {
     debugger;
     this.Dataservice.getHeroes().subscribe(
-      (heroes) => (this.heroes = heroes.slice(1, 5))
+      (heroes) => (this.address = heroes.slice(1, 5))
     );
   }
-  // add(name: string): void {
-  //   debugger;
-  //   name = name.trim();
-  //   if (!name) {
-  //     return;
-  //   }
-  //   this.heroService.addHero({ name } as IAddress).subscribe((data) => {
-  //     this.address.push(data);
-  //     // console.log(this.heroes);
-  //     console.log(this.address);
-  //     this.addNewData.emit();
-  //   });
-  // }
 
   onSubmit() {
     debugger;
-    console.log('Selected country', this.Formdata.value.country);
-    let name = this.Formdata.value.firstName;
-    let LastName = this.Formdata.value.lastName;
-    let address = this.Formdata.value.firstName;
-    let country = this.Formdata.value.country;
-
-    let newObj = {
-      name: this.Formdata.value.firstName,
-      lastName: this.Formdata.value.lastName,
-      country: this.Formdata.value.country,
-    };
-    console.log(newObj);
-
-    name = name.trim();
-    LastName = LastName.trim();
-
-    if (!name || !LastName || !address || !country) {
-      debugger;
+    if (this.formModel.invalid) {
+      alert('Enter Valid Data');
 
       return;
     }
-    this.heroService.addHero({ name } as Hero).subscribe((hero) => {
-      this.heroes.push(hero);
-      console.log(this.heroes);
+    this.heroService.addHero(this.formModel.value).subscribe((data) => {
+      this._snackBar.open('New Data Added', '', {
+        duration: 3000,
+      });
+      this.address.push(data);
+
+      console.log(this.address);
       this.addNewData.emit();
     });
   }

@@ -1,13 +1,12 @@
 <mat-card class="bg-indigo-light">
-  <form [formGroup]="Formdata" (ngSubmit)="onSubmit()">
+  <form [formGroup]="formModel" (ngSubmit)="onSubmit()">
     <br />
-    <div class="p-8 ...">
+    <div class="p-8">
       <mat-form-field appearance="legacy">
         <mat-label>First Name</mat-label>
         <input
           matInput
-          #firstName
-          formControlName="firstName"
+          formControlName="name"
           placeholder="Enter Your First name"
         />
       </mat-form-field>
@@ -16,16 +15,23 @@
         <mat-label>Last Name</mat-label>
         <input
           matInput
-          #lastName
           formControlName="lastName"
           placeholder="Enter Your last name"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="legacy">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          placeholder="Enter Email Address"
         />
       </mat-form-field>
 
       <textarea
         placeholder="Enter Paragraph"
         class="form-control"
-        #data
         formControlName="data"
         rows="5"
         cols="50"
@@ -42,8 +48,8 @@
 
       <mat-error
         *ngIf="
-          Formdata.controls['data'].errors?.required &&
-          Formdata.controls['data'].touched
+          formModel.controls['data'].errors?.required &&
+          formModel.controls['data'].touched
         "
       >
         data is required
