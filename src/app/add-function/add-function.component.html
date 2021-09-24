@@ -61,10 +61,10 @@
         mat-raised-button
         class="bg-gradient-to-r from-red-500 ..."
         type="submit"
+        [disabled]="formModel.invalid"
       >
         Add ✔
       </button>
-      <!--(click)="add(data.value)"-->
     </div>
   </form>
 </mat-card>

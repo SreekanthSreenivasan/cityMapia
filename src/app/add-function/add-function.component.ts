@@ -6,10 +6,8 @@ import {
   FormControl,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { IAddress } from '../hero';
 import { HeroService } from '../hero.service';
-import { Dataservice } from '../Services/dataservices';
-import { Hero } from '../Services/hero';
-
 @Component({
   selector: 'app-add-function',
   templateUrl: './add-function.component.html',
@@ -21,10 +19,10 @@ export class AddFunctionComponent {
   data: any;
 
   formModel!: FormGroup;
-  address: Hero[] = [];
+  address: IAddress[] = [];
   constructor(
     private fb: FormBuilder,
-    private Dataservice: Dataservice,
+    // private Dataservice: Dataservice,
     private heroService: HeroService,
     private _snackBar: MatSnackBar
   ) {}
@@ -33,8 +31,11 @@ export class AddFunctionComponent {
     this.formModel = this.fb.group({
       name: [
         '',
-        [Validators.required, Validators.minLength(3)],
-        Validators.maxLength(50),
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+        ],
       ],
       lastName: ['', [Validators.required]],
       data: ['', [Validators.required]],
@@ -62,18 +63,10 @@ export class AddFunctionComponent {
     });
   }
 
-  getAllData(): void {
-    debugger;
-    this.Dataservice.getHeroes().subscribe(
-      (heroes) => (this.address = heroes.slice(1, 5))
-    );
-  }
-
   onSubmit() {
     debugger;
     if (this.formModel.invalid) {
       alert('Enter Valid Data');
-
       return;
     }
     this.heroService.addHero(this.formModel.value).subscribe((data) => {
@@ -81,9 +74,9 @@ export class AddFunctionComponent {
         duration: 3000,
       });
       this.address.push(data);
-
       console.log(this.address);
       this.addNewData.emit();
+      this.formModel.reset();
     });
   }
 }

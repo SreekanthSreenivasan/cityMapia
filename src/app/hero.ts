@@ -3,6 +3,6 @@ export interface IAddress {
   lastName: String;
   name: string;
   data: string;
-  Country: string;
+  country: string;
   email: string;
 }

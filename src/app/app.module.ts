@@ -13,7 +13,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { AppSearchFunctionComponent } from './app-search-function/app-search-function.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
-import { Dataservice } from './Services/dataservices';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -26,6 +25,10 @@ import {
 } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import {
+  ErrorStateMatcher,
+  ShowOnDirtyErrorStateMatcher,
+} from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +58,6 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
     }),
   ],
   providers: [
-    Dataservice,
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
   ],
   bootstrap: [AppComponent],

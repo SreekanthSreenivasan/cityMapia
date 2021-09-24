@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { IAddress } from './hero';
@@ -10,7 +10,17 @@ import { MessageService } from './message.service';
 @Injectable({ providedIn: 'root' })
 export class HeroService {
   private heroesUrl = 'api/heroes';
+  public SearchInput = new BehaviorSubject('');
+  public searchByCountry = new BehaviorSubject('');
+  public SearchData(value: any) {
+    debugger;
+    this.SearchInput.next(value);
+  }
 
+  public SearchCountry(value: any) {
+    debugger;
+    this.searchByCountry.next(value);
+  }
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
@@ -28,37 +38,6 @@ export class HeroService {
     );
   }
 
-  getHeroNo404<Data>(id: number): Observable<IAddress> {
-    const url = `${this.heroesUrl}/?id=${id}`;
-    return this.http.get<IAddress[]>(url).pipe(
-      map((heroes) => heroes[0]),
-      tap((h) => {
-        const outcome = h ? `fetched` : `did not find`;
-        this.log(`${outcome} hero id=${id}`);
-      }),
-      catchError(this.handleError<IAddress>(`getHero id=${id}`))
-    );
-  }
-  getHero(id: number): Observable<IAddress> {
-    const url = `${this.heroesUrl}/${id}`;
-    return this.http.get<IAddress>(url).pipe(
-      tap((_) => this.log(`fetched hero id=${id}`)),
-      catchError(this.handleError<IAddress>(`getHero id=${id}`))
-    );
-  }
-  searchHeroes(term: string): Observable<IAddress[]> {
-    if (!term.trim()) {
-      return of([]);
-    }
-    return this.http.get<IAddress[]>(`${this.heroesUrl}/?name=${term}`).pipe(
-      tap((x) =>
-        x.length
-          ? this.log(`found heroes matching "${term}"`)
-          : this.log(`no heroes matching "${term}"`)
-      ),
-      catchError(this.handleError<IAddress[]>('searchHeroes', []))
-    );
-  }
   addHero(hero: IAddress): Observable<IAddress> {
     debugger;
     return this.http

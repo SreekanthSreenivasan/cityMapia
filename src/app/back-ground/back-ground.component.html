@@ -1,7 +1,14 @@
 <div>
   <div class="container mx-auto" *ngIf="heroes.length > 0">
     <div
-      class="bg-gray-500 bg-opacity-25 border-indigo-300  pt-13 row border-1 bg-clip-border"
+      class="
+        bg-gray-500 bg-opacity-25
+        border-indigo-300
+        pt-13
+        row
+        border-1
+        bg-clip-border
+      "
     >
       <div class="mb-4 col-lg-3" *ngFor="let tile of heroes">
         <div class="p-3 bg-white rounded shadow-lg">
@@ -19,7 +26,7 @@
               {{ tile.name }} {{ tile.lastName }}
             </h2>
             <h4 class="text-center card-text">
-              {{ tile.data }}
+              {{ tile.country }}
             </h4>
           </div>
         </div>

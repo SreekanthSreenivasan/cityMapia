@@ -7,7 +7,12 @@ import { IAddress } from './hero';
 })
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
-    const heroes: any = [];
+    const heroes: any = [
+      { id: 11, name: 'Mr. Nice', country: 'India' },
+      { id: 12, name: 'Narco', country: 'America' },
+      { id: 13, name: 'Bombasto', country: 'India' },
+      { id: 14, name: 'Celeritas', country: 'America' },
+    ];
     return { heroes };
   }
 

@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { IAddress } from '../hero';
 import { HeroService } from '../hero.service';
-import { Dataservice } from '../Services/dataservices';
+
 @Component({
   selector: 'app-search-function',
   templateUrl: './app-search-function.component.html',
@@ -11,13 +11,14 @@ import { Dataservice } from '../Services/dataservices';
 })
 export class AppSearchFunctionComponent implements OnInit {
   searchTerms: any;
-  constructor(
-    private heroService: HeroService,
-    private dataService: Dataservice
-  ) {}
+  constructor(private heroService: HeroService) {}
   search(term: string): void {
     debugger;
-    this.dataService.SearchData(term);
+    this.heroService.SearchData(term);
   }
   ngOnInit(): void {}
+  selectedValue(e: any) {
+    debugger;
+    this.heroService.SearchCountry(e.value);
+  }
 }
