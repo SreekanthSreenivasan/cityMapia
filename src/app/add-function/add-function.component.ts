@@ -6,6 +6,7 @@ import {
   FormControl,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { customErrorStateMatcher } from '../custom-error-state-matcher';
 import { IAddress } from '../hero';
 import { HeroService } from '../hero.service';
 @Component({
@@ -17,7 +18,7 @@ export class AddFunctionComponent {
   @Output() addNewData = new EventEmitter();
   name = 'Angular';
   data: any;
-
+customErrorStateMatcher = new customErrorStateMatcher;
   formModel!: FormGroup;
   address: IAddress[] = [];
   constructor(
@@ -77,6 +78,7 @@ export class AddFunctionComponent {
       console.log(this.address);
       this.addNewData.emit();
       this.formModel.reset();
+      
     });
   }
 }

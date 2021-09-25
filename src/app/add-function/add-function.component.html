@@ -1,70 +1,44 @@
 <mat-card class="bg-indigo-light">
-  <form [formGroup]="formModel" (ngSubmit)="onSubmit()">
-    <br />
-    <div class="p-8">
-      <mat-form-field appearance="legacy">
-        <mat-label>First Name</mat-label>
-        <input
-          matInput
-          formControlName="name"
-          placeholder="Enter Your First name"
-        />
-      </mat-form-field>
+    <form [formGroup]="formModel" (ngSubmit)="onSubmit()">
+        <br />
+        <div class="p-8">
+            <mat-form-field appearance="legacy">
+                <mat-label>First Name</mat-label>
+                <input matInput [errorStateMatcher]="customErrorStateMatcher" formControlName="name" placeholder="Enter Your First name" />
+            </mat-form-field>
 
-      <mat-form-field appearance="legacy">
-        <mat-label>Last Name</mat-label>
-        <input
-          matInput
-          formControlName="lastName"
-          placeholder="Enter Your last name"
-        />
-      </mat-form-field>
+            <mat-form-field appearance="legacy">
+                <mat-label>Last Name</mat-label>
+                <input matInput [errorStateMatcher]="customErrorStateMatcher" formControlName="lastName" placeholder="Enter Your last name" />
+            </mat-form-field>
 
-      <mat-form-field appearance="legacy">
-        <mat-label>Email</mat-label>
-        <input
-          matInput
-          formControlName="email"
-          placeholder="Enter Email Address"
-        />
-      </mat-form-field>
+            <mat-form-field appearance="legacy">
+                <mat-label>Email</mat-label>
+                <input matInput [errorStateMatcher]="customErrorStateMatcher" formControlName="email" placeholder="Enter Email Address" />
+            </mat-form-field>
 
-      <textarea
-        placeholder="Enter Paragraph"
-        class="form-control"
-        formControlName="data"
-        rows="5"
-        cols="50"
-        required
-      ></textarea>
+            <textarea placeholder="Enter Paragraph" class="form-control" formControlName="data" rows="5" cols="50" required></textarea>
 
-      <mat-form-field appearance="legacy">
-        <mat-label>Select Country</mat-label>
-        <mat-select formControlName="country">
-          <mat-option value="India">India</mat-option>
-          <mat-option value="America">America</mat-option>
-        </mat-select>
-      </mat-form-field>
+            <mat-form-field appearance="legacy">
+                <mat-label>Select Country</mat-label>
+                <mat-select [errorStateMatcher]="customErrorStateMatcher" formControlName="country">
+                    <mat-option value="India">India</mat-option>
+                    <mat-option value="America">America</mat-option>
+                </mat-select>
+            </mat-form-field>
 
-      <mat-error
-        *ngIf="
-          formModel.controls['data'].errors?.required &&
-          formModel.controls['data'].touched
-        "
-      >
-        data is required
-      </mat-error>
-    </div>
-    <br />
-    <div>
-      <button
-        mat-raised-button
-        class="bg-gradient-to-r from-red-500 ..."
-        type="submit"
-        [disabled]="formModel.invalid"
-      >
-        Add ✔
-      </button>
-    </div>
-  </form>
+            <mat-error *ngIf="
+            formModel.controls['data'].errors?.required &&
+            formModel.controls['data'].touched
+          ">
+                data is required
+            </mat-error>
+        </div>
+        <br />
+        <div>
+            <button mat-raised-button class="bg-gradient-to-r from-red-500 ..." type="submit" [disabled]="formModel.invalid">
+          Add ✔
+        </button>
+        </div>
+    </form>
 </mat-card>
